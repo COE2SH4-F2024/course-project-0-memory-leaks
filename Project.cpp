@@ -35,8 +35,9 @@ int main(void)
         RunLogic();
         DrawScreen();
         LoopDelay();
+        exitFlag = gameMechanics->getExitFlagStatus();
     }
-    // CleanUp();
+    CleanUp();
     return 0;
 }
 
@@ -128,6 +129,7 @@ void DrawScreen(void)
                 }
             }
             MacUILib_printf("%c", board[i][j]); // Print the board
+
         }
         MacUILib_printf("\n");
     }
@@ -135,8 +137,8 @@ void DrawScreen(void)
     // Display messages
     if (!gameMechanics->getLoseFlagStatus() && !gameMechanics->getExitFlagStatus() && !gameMechanics->getWinFlagStatus())
     {
-        MacUILib_printf("Score: %d\n", gameMechanics->getScore());
-        MacUILib_printf("Use 'W', 'A', 'S', 'D' to move the snake.\n");
+        MacUILib_printf("Score: %d ", gameMechanics->getScore());
+        MacUILib_printf("Use 'W', 'A', 'S', 'D' to move the snake. ");
         MacUILib_printf("Special food blinks and gives extra points!\n");
     }
     else if (gameMechanics->getLoseFlagStatus())
@@ -162,11 +164,13 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
+    int finalScore = gameMechanics->getScore();
     // Free resources
     delete gameMechanics;
     delete food;
     delete player;
 
     MacUILib_clearScreen();
+    MacUILib_printf("Score: %d ", finalScore);
     MacUILib_uninit();
 }

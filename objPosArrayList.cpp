@@ -70,7 +70,7 @@ void objPosArrayList::insertTail(objPos thisPos)
     if (listSize >= arrayCapacity) return; // Do nothing if the list is full
 
     aList[listSize] = thisPos;             // Add the new element at the end
-    listSize++;                            // Increment the size
+    //listSize++;                            // Increment the size
 }
 
 // Remove the head element of the list

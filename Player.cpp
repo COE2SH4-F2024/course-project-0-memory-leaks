@@ -152,7 +152,7 @@ void Player::movePlayer()
     }
 
     // Check for win condition
-    if (player->getSize() >= 50)
+    if (player->getSize() > 50)
     {
         mainGameMechsRef->setWinFlag();
     }
@@ -176,7 +176,7 @@ bool Player::checkFoodConsumption()
 // Increase the player's length
 void Player::increasePlayerLength()
 {
-    // Add a new head at the current position
+    // Add a new tail segment
     objPos newTail = player->getTailElement();
     player->insertTail(newTail);
 }
