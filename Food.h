@@ -1,40 +1,38 @@
 #ifndef FOOD_H
 #define FOOD_H
+#define FOOD_SPAWN_CAP 5
 
-#include <cstdlib>
-#include <time.h>
-#include <vector>
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include <vector>
 
-// Define the maximum number of food items
-#define FOOD_SPAWN_CAP 5
+#define FOOD_SPAWN_CAP 5 // Define max food items
 
 class Food
 {
 private:
-    objPos* foodXYS;       // Array of food positions
-    int binsize;           // Number of food items
-    bool foodoscillator;   // Toggle for special food display
-    bool specialfood;      // Indicates special food availability
-    char normalfoodsym;    // Symbol for normal food
-    char specialfoodsym;   // Symbol for special food
+    objPos* foodXYS; // Array of food positions
+    int binsize;     // Maximum number of food items
+    bool foodoscillator;
+    bool specialfood;
+    char normalfoodsym;
+    char specialfoodsym;
 
 public:
     // Constructors and Destructor
     Food();
     ~Food();
-    Food(const Food& food);              // Copy Constructor
-    Food& operator=(const Food& food);   // Copy Assignment Operator
+    Food(const Food& food);
+    Food& operator=(const Food& food);
 
-    // Generate food items
-    void generateFood(objPosArrayList playpos, int xrange, int yrange);
+    // Food generation
+    void generateFood(const objPosArrayList& playpos, int xrange, int yrange);
 
-    // Get food positions
+    // Food retrieval
     objPos getFoodPos(int index) const;
     objPos getFoodPos(int x, int y) const;
 
-    // Oscillator control
+    // Oscillator functions
     void switchoscillator();
     bool getfoodoscillator() const;
 

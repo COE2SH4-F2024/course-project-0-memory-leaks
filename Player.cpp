@@ -25,8 +25,8 @@ Player::Player(GameMechs* thisGMRef, Food* thisFood)
     char headSymbol = '@';
     char bodySymbol = '+';
 
-    // Create the initial snake with length 3
-    for (int i = 0; i < 3; i++)
+    // Create the initial snake with length 2
+    for (int i = 0; i < 2; i++)
     {
         player->insertHead(objPos(startX - i, startY, (i == 0) ? headSymbol : bodySymbol));
     }
@@ -177,15 +177,15 @@ bool Player::checkFoodConsumption()
 void Player::increasePlayerLength()
 {
     // Add a new head at the current position
-    objPos newHead = player->getHeadElement();
-    player->insertHead(newHead);
+    objPos newTail = player->getTailElement();
+    player->insertTail(newTail);
 }
 
 // Check if the player collides with itself
 bool Player::checkselfcollision()
 {
     objPos head = player->getHeadElement();
-    for (int i = 1; i < player->getSize(); i++) // Start from index 1 to skip the head
+    for (int i = 2; i < player->getSize(); i++) // Start from index 1 to skip the head
     {
         objPos segment = player->getElement(i);
         if (head.pos->x == segment.pos->x && head.pos->y == segment.pos->y)

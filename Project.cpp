@@ -36,8 +36,7 @@ int main(void)
         DrawScreen();
         LoopDelay();
     }
-
-    CleanUp();
+    // CleanUp();
     return 0;
 }
 
@@ -52,7 +51,7 @@ void Initialize(void)
     player = new Player(gameMechanics, food);
 
     // Generate initial food
-    player->getFoodlist()->generateFood(*player->getPlayerPos(), gameMechanics->getBoardSizeX(), gameMechanics->getBoardSizeY());
+    food->generateFood(*player->getPlayerPos(), gameMechanics->getBoardSizeX(), gameMechanics->getBoardSizeY());
 
     exitFlag = false;
 }
@@ -106,25 +105,25 @@ void DrawScreen(void)
             // Draw food
             for (int k = 0; k < FOOD_SPAWN_CAP; k++)
             {
-                if (i == player->getFoodlist()->getFoodPos(k).pos->x && j == player->getFoodlist()->getFoodPos(k).pos->y)
+                if (i == food->getFoodPos(k).pos->x && j == food->getFoodPos(k).pos->y)
                 {
                     // Oscillate special food
-                    if (k == 3 && player->getFoodlist()->specialfoodcheck())
+                    if (k == 3 && food->specialfoodcheck())
                     {
-                        if (player->getFoodlist()->getfoodoscillator())
+                        if (food->getfoodoscillator())
                         {
-                            board[i][j] = player->getFoodlist()->getspecial();
-                            player->getFoodlist()->switchoscillator();
+                            board[i][j] = food->getspecial();
+                            food->switchoscillator();
                         }
                         else
                         {
-                            board[i][j] = player->getFoodlist()->getnormal();
-                            player->getFoodlist()->switchoscillator();
+                            board[i][j] = food->getnormal();
+                            food->switchoscillator();
                         }
                     }
                     else
                     {
-                        board[i][j] = player->getFoodlist()->getFoodPos(k).getSymbol();
+                        board[i][j] = food->getFoodPos(k).getSymbol();
                     }
                 }
             }
@@ -151,7 +150,7 @@ void DrawScreen(void)
     }
     else if (gameMechanics->getExitFlagStatus())
     {
-        MacUILib_printf("You exited the game. See you next time!\n");
+        MacUILib_printf("You exited the game. See you next time!\n", gameMechanics->getScore());
     }
 }
 

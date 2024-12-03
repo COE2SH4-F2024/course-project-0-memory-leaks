@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GameMechs.h"
 
 GameMechs::GameMechs()
@@ -37,6 +38,8 @@ bool GameMechs::getExitFlagStatus() const
 void GameMechs::setExitTrue()
 {
     exitFlag = true;
+
+    
 }
 
 bool GameMechs::getLoseFlagStatus() const
@@ -47,6 +50,7 @@ bool GameMechs::getLoseFlagStatus() const
 void GameMechs::setLoseFlag()
 {
     loseFlag = true;
+    
 }
 
 bool GameMechs::getWinFlagStatus() const
@@ -57,6 +61,7 @@ bool GameMechs::getWinFlagStatus() const
 void GameMechs::setWinFlag()
 {
     winFlag = true;
+    
 }
 
 char GameMechs::getInput() const

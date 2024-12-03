@@ -6,7 +6,7 @@
 // Constructor
 Food::Food()
 {
-    binsize = 5; // Maximum number of food items
+    binsize = FOOD_SPAWN_CAP; // Maximum number of food items
     foodXYS = new objPos[binsize];
     foodoscillator = true;
     specialfood = false;
@@ -56,12 +56,12 @@ Food& Food::operator=(const Food& food)
 }
 
 // Generate Food
-void Food::generateFood(objPosArrayList playpos, int xrange, int yrange)
+void Food::generateFood(const objPosArrayList& playpos, int xrange, int yrange)
 {
     srand(time(NULL));
 
     // Initialize 2D vector to represent availability on the board
-    std::vector<std::vector<int>> availablepos(yrange, std::vector<int>(xrange, 0));
+    std::vector<std::vector<int> > availablepos(yrange, std::vector<int>(xrange, 0));
 
     // Mark occupied positions based on the player's current positions
     for (int i = 0; i < playpos.getSize(); i++)
@@ -80,9 +80,16 @@ void Food::generateFood(objPosArrayList playpos, int xrange, int yrange)
         } while (availablepos[y][x] != 0); // Ensure the position is unoccupied
 
         // Assign food symbol: Special food for index 3 with a 50% chance
-        char symbol = (i == 3 && rand() % 2) ? specialfoodsym : normalfoodsym;
+        if (i == 3 && rand() % 2 == 0)
+        {
+            foodXYS[i].setObjPos(x, y, specialfoodsym);
+            specialfood = true;
+        }
+        else
+        {
+            foodXYS[i].setObjPos(x, y, normalfoodsym);
+        }
 
-        foodXYS[i].setObjPos(x, y, symbol);
         availablepos[y][x] = 1; // Mark position as occupied
     }
 }
