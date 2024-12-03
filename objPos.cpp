@@ -1,13 +1,15 @@
 #include "objPos.h"
 
+// Default Constructor
 objPos::objPos()
 {
     pos = new Pos;
     pos->x = 0;
     pos->y = 0;
-    symbol = 0; //NULL
+    symbol = 0; // NULL
 }
 
+// Parameterized Constructor
 objPos::objPos(int xPos, int yPos, char sym)
 {
     pos = new Pos;
@@ -16,12 +18,36 @@ objPos::objPos(int xPos, int yPos, char sym)
     symbol = sym;
 }
 
-// Respect the rule of six / minimum four
-// [TODO] Implement the missing special member functions to meet the minimum four rule
+// Copy Constructor
+objPos::objPos(const objPos &a)
+{
+    pos = new Pos;
+    pos->x = a.pos->x;
+    pos->y = a.pos->y;
+    symbol = a.symbol;
+}
 
+// Copy Assignment Operator
+objPos& objPos::operator=(const objPos &a)
+{
+    if (this != &a)
+    {
+        delete pos; // Avoid memory leak
+        pos = new Pos;
+        pos->x = a.pos->x;
+        pos->y = a.pos->y;
+        symbol = a.symbol;
+    }
+    return *this;
+}
 
+// Destructor
+objPos::~objPos()
+{
+    delete pos;
+}
 
-
+// Set Position using another objPos
 void objPos::setObjPos(objPos o)
 {
     pos->x = o.pos->x;
@@ -29,6 +55,7 @@ void objPos::setObjPos(objPos o)
     symbol = o.symbol;
 }
 
+// Set Position using explicit coordinates and symbol
 void objPos::setObjPos(int xPos, int yPos, char sym)
 {
     pos->x = xPos;
@@ -36,6 +63,7 @@ void objPos::setObjPos(int xPos, int yPos, char sym)
     symbol = sym;
 }
 
+// Get the current position object
 objPos objPos::getObjPos() const
 {
     objPos returnPos;
@@ -46,20 +74,24 @@ objPos objPos::getObjPos() const
     return returnPos;
 }
 
+// Get the symbol of the current position
 char objPos::getSymbol() const
 {
     return symbol;
 }
 
+// Check if this position is equal to another position
 bool objPos::isPosEqual(const objPos* refPos) const
 {
     return (refPos->pos->x == pos->x && refPos->pos->y == pos->y);
 }
 
+// Get the symbol if the position matches another position
 char objPos::getSymbolIfPosEqual(const objPos* refPos) const
 {
-    if(isPosEqual(refPos))
+    if (isPosEqual(refPos))
+    {
         return symbol;
-    else
-        return 0;
+    }
+    return 0;
 }

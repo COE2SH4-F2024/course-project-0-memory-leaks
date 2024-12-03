@@ -1,7 +1,7 @@
 #ifndef OBJPOS_H
 #define OBJPOS_H
 
-// Not really a C++ thing
+// A simple structure for position
 typedef struct 
 {
     int x;
@@ -10,24 +10,28 @@ typedef struct
 
 class objPos
 {
-    public:
-        Pos* pos;        
-        char symbol;
+public:
+    Pos* pos;        
+    char symbol;
 
-        objPos();
-        objPos(int xPos, int yPos, char sym);
-        
-        // Respect the rule of six / minimum four
-        // [TODO] Implement the missing special member functions to meet the minimum four rule
-        
-        void setObjPos(objPos o);        
-        void setObjPos(int xPos, int yPos, char sym);  
+    // Constructors and Destructor
+    objPos();
+    objPos(int xPos, int yPos, char sym);
+    objPos(const objPos &a);        // Copy Constructor
+    objPos& operator=(const objPos &a); // Copy Assignment Operator
+    ~objPos();                      // Destructor
 
-        objPos getObjPos() const;
-        char getSymbol() const;
-        char getSymbolIfPosEqual(const objPos* refPos) const;
-        
-        bool isPosEqual(const objPos* refPos) const;
+    // Methods to manipulate object position
+    void setObjPos(objPos o);        
+    void setObjPos(int xPos, int yPos, char sym);  
+
+    // Getters
+    objPos getObjPos() const;
+    char getSymbol() const;
+    char getSymbolIfPosEqual(const objPos* refPos) const;
+
+    // Comparison
+    bool isPosEqual(const objPos* refPos) const;
 };
 
 #endif

@@ -4,34 +4,48 @@
 #include "GameMechs.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Food.h"
+#include <iostream>
 
 class Player
-{
-    // Construct the remaining declaration from the project manual.
+{   
+public:
+    enum Dir { UP, DOWN, LEFT, RIGHT, STOP }; // Direction state
 
-    // Only some sample members are included here
+    // Constructors and Destructor
+    Player(); 
+    Player(GameMechs* thisGMRef, Food* thisFood);
+    ~Player();
+    Player(const Player& pp);                // Copy constructor
+    Player& operator=(const Player& pp);     // Copy assignment operator
 
-    // You will include more data members and member functions to complete your design.
+    // Player Movement and Behavior
+    objPosArrayList* getPlayerPos() const;      
+    void updatePlayerDir();
+    void movePlayer();
+    bool checkFoodConsumption(); 
+    void increasePlayerLength();
+    bool checkselfcollision();
 
-    
-    public:
-        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
+    // Speed Control
+    int getSpeed() const; 
+    void setSpeed(int s);        
 
-        Player(GameMechs* thisGMRef);
-        ~Player();
+    // Food Management
+    Food* getFoodlist() const;
 
-        objPos getPlayerPos() const; // Upgrade this in iteration 3.       
-        void updatePlayerDir();
-        void movePlayer();
+private:
+    objPosArrayList* player;  // Snake body positions
+    char headsymbol;          // Symbol for the head
+    char bodysymbol;          // Symbol for the body
+    enum Dir myDir;           // Current direction
 
-        // More methods to be added here
+    Food* foodlist;           // Reference to the food object
+    GameMechs* mainGameMechsRef; // Reference to game mechanics
 
-    private:
-        objPos playerPos; // Upgrade this in iteration 3.       
-        enum Dir myDir;
-
-        // Need a reference to the Main Game Mechanisms
-        GameMechs* mainGameMechsRef;
+    int rowNums;              // Number of rows (board height)
+    int colNums;              // Number of columns (board width)
+    int speed;                // Speed of the snake
 };
 
 #endif
